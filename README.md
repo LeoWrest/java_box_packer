@@ -28,3 +28,10 @@ Logic logic = new Logic();
 logic.doLogic(container, boxList);
 
 ```
+
+#Output: 
+```
+Amount of containers: 1
+Amount of items packed in container 1: 7
+Placement data: [Placement{dimensions=Dimension{width=60, depth=38, height=1}, positions=Position{width=0, depth=0, height=0}}, Placement{dimensions=Dimension{width=30, depth=19, height=1}, positions=Position{width=0, depth=0, height=1}}, Placement{dimensions=Dimension{width=30, depth=19, height=1}, positions=Position{width=0, depth=0, height=2}}, Placement{dimensions=Dimension{width=30, depth=19, height=1}, positions=Position{width=0, depth=19, height=1}}, Placement{dimensions=Dimension{width=30, depth=19, height=1}, positions=Position{width=0, depth=19, height=2}}, Placement{dimensions=Dimension{width=30, depth=20, height=1}, positions=Position{width=30, depth=0, height=1}}, Placement{dimensions=Dimension{width=20, depth=10, height=1}, positions=Position{width=30, depth=0, height=2}}]
+```
