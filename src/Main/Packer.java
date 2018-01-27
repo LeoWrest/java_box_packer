@@ -9,18 +9,26 @@ import packing.placement.Position;
 
 import java.util.*;
 
-public class Logic {
+public class Packer {
 
 
 
-    public void doLogic (Rectangle containerDimensions, List<Rectangle> boxList) throws Exception {
+    public void pack(Rectangle containerSpecification, List<Rectangle> boxList) throws Exception {
         List<Container> containerList = new ArrayList<>();
         // for every product in the list
         for (Rectangle box : boxList) {
+            // throw exception if box weight is more than the container
+            if (box.getWeight() > containerSpecification.getWeight()) {
+                throw new Exception("Box is too heavy for container");
+            }
             // Need a bool so we can break out nested loops once it's been packed
             boolean itemHasBeenPacked = false;
             // for each container check for space
             for (Container container : containerList) {
+                // skip to next container if current box is too heavy for this box
+                if ((container.getCurrentWeight() + box.getWeight()) > containerSpecification.getWeight()) {
+                    continue;
+                }
                 // cant remove spaces while looping over them
                 // place holders variables for outside
                 Space spaceToRemove = null;
@@ -35,6 +43,8 @@ public class Logic {
                     }
                     // add the placement to the current container
                     container.addPlacement(newPlacement);
+                    // add weight to the container
+                    container.addWeight(box.getWeight());
                     // space to be removed and broken up
                     spaceToRemove = container.getSpaces().get(i);
                     itemHasBeenPacked = true;
@@ -57,7 +67,7 @@ public class Logic {
             // If there is no container or current container is full then add new container
             Container container = new Container();
             // generate dimension size of the pod
-            Dimension dimension = new Dimension(containerDimensions.getWidth(), containerDimensions.getDepth(), containerDimensions.getHeight());
+            Dimension dimension = new Dimension(containerSpecification.getWidth(), containerSpecification.getDepth(), containerSpecification.getHeight());
             // start the position back at 0,0,0
             Position position = new Position(0,0,0);
             // store these in a space
@@ -70,6 +80,7 @@ public class Logic {
             }
 
             container.addPlacement(placement);
+            container.addWeight(box.getWeight());
             container.getSpaces().addAll(breakUpSpace(space, placement));
 
             containerList.add(container);
